@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+#include <climits>
+using namespace std;
+ 
+#define ll long long
+#define INF LLONG_MAX
+ 
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+ 
+    // Input
+    ll n, target;
+    cin >> n >> target;
+    vector<ll> coins(n);
+    for (ll i = 0; i < n; i++) {
+        cin >> coins[i];
+    }
+    vector<ll> dp(target + 1, INF);
+    dp[0] = 0;
+    for (ll i = 0; i < n; i++) {
+        for (ll t = coins[i]; t <= target; t++) {
+            if (dp[t - coins[i]] != INF) { 
+                dp[t] = min(dp[t], dp[t - coins[i]] + 1);
+            }
+        }
+    }
+    if (dp[target] == INF) {
+        cout << -1 << endl;
+    } else {
+        cout << dp[target] << endl;
+    }
+ 
+    return 0;
+}
