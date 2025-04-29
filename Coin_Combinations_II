@@ -1,0 +1,51 @@
+#include<iostream>
+#include<vector>
+#include<map>
+#include<unordered_map>
+#include<set>
+#include<stack>
+#include<queue>
+#include<cmath>
+#include<math.h>
+#include<string>
+#include<iterator>
+#include<algorithm>
+#include<ctype.h>
+#include<bits/stdc++.h>
+#define BHUSHAN ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define ll long long
+#define vi vector<ll>
+#define vip vector<pair<ll,ll>>
+#define yes cout<<"YES"<<endl;
+#define no cout<<"NO"<<endl;
+using namespace std;
+
+
+//***************************************START YOUR CODE FROM HERE******************************************//
+
+const int MOD = 1e9 + 7;
+
+int main() {
+    BHUSHAN;
+
+    int n, target;
+    cin >> n >> target;
+
+    vector<int> coins(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> coins[i];
+    }
+
+    vector<int> dp(target + 1, 0);
+    dp[0] = 1;
+
+    for (int i = 0; i < n; ++i) {
+        for (int sum = coins[i]; sum <= target; ++sum) {
+            dp[sum] += dp[sum - coins[i]];
+            if (dp[sum] >= MOD) dp[sum] -= MOD;  // faster than %
+        }
+    }
+
+    cout << dp[target] << "\n";
+    return 0;
+}
