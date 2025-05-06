@@ -1,0 +1,85 @@
+#include<iostream>
+#include<vector>
+#include<map>
+#include<unordered_map>
+#include<set>
+#include<stack>
+#include<queue>
+#include<cmath>
+#include<math.h>
+#include<string>
+#include<iterator>
+#include<algorithm>
+#include<ctype.h>
+#include<bits/stdc++.h>
+#define BHUSHAN ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define ll long long
+#define vi vector<ll>
+#define vip vector<pair<ll,ll>>
+#define yes cout<<"YES"<<endl;
+#define no cout<<"NO"<<endl;
+using namespace std;
+
+
+
+//***************************************START YOUR CODE FROM HERE******************************************//
+
+int main()
+{
+    
+    ll n,x;
+    cin>>n>>x;
+    //vector<vector<ll>>dp(n+5,vector<ll>(x+1,0));
+    vector<ll>price;
+    for(ll i=0;i<n;i++)
+    {
+        ll p;
+        cin>>p;
+        price.push_back(p);
+    }
+    vector<ll>page;
+    for(ll i=0;i<n;i++)
+    {
+        ll p;
+        cin>>p;
+        page.push_back(p);
+    }
+     //vector<vector<ll>> dp(n + 1, vector<ll>(x + 1, 0));
+ 
+    
+    //********* with space optimization
+    
+    vector<ll>cur(x+1),next(x+1,0);
+    for (ll i = n-1; i>=0; i--) {
+        for (ll j = 0; j <= x; ++j) {
+            
+            //without space optimization
+            // ll pick = 0, skip = 0;
+            // if(b >= price[i]){
+            //     pick = pages[i] + dp[i + 1][b - price[i]];
+            // }
+            // skip = dp[i + 1][b];
+            // dp[i][b] = max(pick, skip);
+            
+            
+            //with space optimization
+           ll pick=0;
+           ll skip=0;
+           if(j>=price[i])
+           {
+               pick=page[i]+next[j-price[i]];
+           }
+           skip=next[j];
+           cur[j]=max(pick,skip);
+        }
+        next=cur;
+    }
+    cout<<cur[x]<<endl;
+
+    
+    
+    
+   return 0;
+}
+
+
