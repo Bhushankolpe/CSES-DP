@@ -1,0 +1,58 @@
+#include<iostream>
+#include<vector>
+#include<map>
+#include<unordered_map>
+#include<set>
+#include<stack>
+#include<queue>
+#include<cmath>
+#include<math.h>
+#include<string>
+#include<iterator>
+#include<algorithm>
+#include<ctype.h>
+#include<bits/stdc++.h>
+#define BHUSHAN ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define ll long long
+#define vi vector<ll>
+#define vip vector<pair<ll,ll>>
+#define yes cout<<"YES"<<endl;
+#define no cout<<"NO"<<endl;
+using namespace std;
+
+
+
+//***************************************START YOUR CODE FROM HERE******************************************//
+
+const int N = 5000;
+ll dp[N][N];
+bool visited[N][N];  // Use a visited array instead of memset on dp
+
+ll solve(int l, int r, const vector<ll>& v) {
+    if (l > r) return 0;
+    if (visited[l][r]) return dp[l][r];
+
+    visited[l][r] = true;
+    ll pickLeft = v[l] + min(solve(l + 2, r, v), solve(l + 1, r - 1, v));
+    ll pickRight = v[r] + min(solve(l, r - 2, v), solve(l + 1, r - 1, v));
+    return dp[l][r] = max(pickLeft, pickRight);
+}
+
+int main()
+{
+    ll n;
+    cin>>n;
+    vector<ll>v;
+    for(ll i=0;i<n;i++)
+    {
+        ll x;
+        cin>>x;
+        v.push_back(x);
+    }
+    
+    cout<<solve(0,n-1,v);
+    
+   return 0;
+}
+
+
